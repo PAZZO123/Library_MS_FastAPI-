@@ -9,7 +9,7 @@ from src.db.redis import token_in_blocklist
 from .service import UserService
 from .utils import decode_token
 from typing import List
-from .model import User
+from src.db.models import User
 
 user_service=UserService()
 

@@ -5,7 +5,7 @@ from fastapi.exceptions import HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from src.auth.dependencies import AcessTokenBearer
-from src.books.models import Book as BookModal
+from src.db.models import Book as BookModal
 from src.books.schemas import Book, BookCreateModel, BookUpdateModel
 from src.books.service import BookService
 from src.db.main import get_session
