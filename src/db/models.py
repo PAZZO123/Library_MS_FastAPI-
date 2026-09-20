@@ -6,7 +6,9 @@ from sqlmodel import Column, Field, SQLModel, Relationship
 from typing import Optional, List
 # from src.books import models
 import uuid
+from typing import List
 from datetime import date, datetime
+
 
 
 
@@ -63,7 +65,8 @@ class Book(SQLModel, table=True):
     
     def __repr__(self):
         return f"<Book {self.title}> "
-    
+
+
   
 class Reviews(SQLModel, table=True):
     __tablename__="reviews"

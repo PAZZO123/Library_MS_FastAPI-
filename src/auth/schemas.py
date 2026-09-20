@@ -4,6 +4,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List
 from src.books.schemas import Book
+from src.reviews.schemas import ReviewModel
 
 
 class UserCreateModel(BaseModel):
@@ -27,6 +28,7 @@ class UserModel(BaseModel):
     
 class UserBookModel(UserModel):
     books:List[Book]
+    reviews:List[ReviewModel]
     
 class UserLoginModel(BaseModel):
     email:str=Field(max_length=40)

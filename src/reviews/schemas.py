@@ -13,6 +13,6 @@ class ReviewModel(BaseModel):
     created_at:datetime
     updated_at: datetime
     
-class ReviewCreateModel:
+class ReviewCreateModel(BaseModel):
     rating:int=Field(lt=5)
-    reviw_text:str
+    review_text:str
