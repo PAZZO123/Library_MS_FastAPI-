@@ -10,8 +10,8 @@ from sqlalchemy.orm import sessionmaker
 
 engine=AsyncEngine(
     create_engine(
-    url=config.DATABASE_URL,
-    echo=True
+    url=config.DATABASE_URL
+
 )
 )
 

@@ -10,6 +10,7 @@ from src.books.schemas import Book, BookCreateModel, BookUpdateModel, BookDetail
 from src.books.service import BookService
 from src.db.main import get_session
 from src.auth.dependencies import RoleChecker
+from src.errors import BookNOtFound
 
 
 book_router=APIRouter()
@@ -21,7 +22,6 @@ role_checker=RoleChecker(['admin', 'user'])
 
 @book_router.get("/", response_model=List[Book])
 async def get_all_books(session:AsyncSession =Depends(get_session), token_details:dict=Depends(access_token_bearer),_:bool=Depends(role_checker)):
-    print(token_details)
     books=await book_service.get_all_books(session)
     return books
 @book_router.get("/user/{user_uid}", response_model=List[Book])
@@ -42,7 +42,7 @@ async def get_book(book_uid:str,session:AsyncSession =Depends(get_session), toke
   if book:
       return book
   else:
-     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not Found!")
+     raise BookNOtFound()
 
 @book_router.patch("/{book_uid}", response_model=Book, status_code=status.HTTP_200_OK)
 async def update_book(book_uid:str, updated_book:BookUpdateModel,session:AsyncSession =Depends(get_session), token_details:dict=Depends(access_token_bearer),_:bool=Depends(admin_role_checker))->dict:
@@ -50,7 +50,7 @@ async def update_book(book_uid:str, updated_book:BookUpdateModel,session:AsyncSe
    if updated_book_data:
        return updated_book_data
    else:    
-     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book with that id not found")
+     raise BookNOtFound()
             
 
 @book_router.delete("/{book_uid}", status_code=status.HTTP_204_NO_CONTENT)
@@ -60,4 +60,4 @@ async def delete_book(book_uid:str, session:AsyncSession =Depends(get_session), 
        return {"message":"Book Deleted Successfully"}
    else:
 
-     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not Found!")
+     raise BookNOtFound()
